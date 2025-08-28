@@ -1,0 +1,35 @@
+:root { --bg:#0f1113; --panel:#1b1f23; --text:#e6e6e6; --muted:#9aa0a6; --accent:#7c4dff; }
+html,body { height:100%; }
+body { background:var(--bg); color:var(--text); }
+.navbar, .card { background:var(--panel) !important; }
+.card { border-color:#2b3137; }
+a { text-decoration:none; }
+.container { max-width:980px; }
+.form-control, .form-select { background:#0f1214; color:var(--text); border-color:#2b3137; }
+.form-control:focus { border-color:var(--accent); box-shadow:0 0 0 .2rem rgba(124,77,255,.25); }
+.btn-primary { background:var(--accent); border-color:var(--accent); }
+.tweet-date { color: #22c55e !important; } /* green */
+.tweet-text { color: #251ac5 !important; } /* white */
+
+/* Stronger blue and higher specificity */
+.card .tweet-text { 
+  color: #3b82f6 !important;  /* brighter blue */
+  font-weight: 500;
+}
+
+/* Lighten card background so colors pop */
+.card {
+  --bs-card-bg: #1f2430 !important; /* slightly lighter than black */
+  background-color: var(--bs-card-bg) !important;
+  border-color: #2f3542 !important;
+}
+
+/* Make tweet text bright and readable on dark background */
+.card .tweet-text {
+  color: #3b82f6 !important;     /* bright blue */
+  font-weight: 600;
+}
+
+/* Ensure other text isn't dimmed */
+.card .card-text { color: #e9edf1 !important; }  /* general text */
+.text-muted { color: #cfd3d7 !important; opacity: 1; }  /* readable muted */

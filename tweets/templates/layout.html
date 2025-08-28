@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}Twitter-style microblog{% endblock %}</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="bg-dark text-white">
+
+{% with name=request.resolver_match.url_name %}
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
+		<div class="container">
+			<a class="navbar-brand fw-bold" href="{% url 'index' %}">Twitter-style microblog</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div id="nav" class="collapse navbar-collapse">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					{% if name != 'login' and name != 'register' and name != 'logout' and user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'my_tweets' %}">My Tweets</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'tweet_create' %}">New Tweet</a>
+						</li>
+					{% endif %}
+				</ul>
+				<ul class="navbar-nav ms-auto">
+					{% if user.is_authenticated %}
+						<li class="nav-item d-flex align-items-center me-2">
+							<span class="text-light small">Hi, {{ user.username }}</span>
+						</li>
+						<li class="nav-item">
+							<form method="post" action="{% url 'logout' %}" class="d-inline">
+								{% csrf_token %}
+								<button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+							</form>
+						</li>
+					{% else %}
+						{% if name != 'login' %}
+							<li class="nav-item me-2">
+								<a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Login</a>
+							</li>
+						{% endif %}
+						{% if name != 'register' %}
+							<li class="nav-item">
+								<a class="btn btn-primary btn-sm" href="{% url 'register' %}">Register</a>
+							</li>
+						{% endif %}
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main class="container py-4">
+		{% if messages %}
+			<div class="mb-3">
+				{% for message in messages %}
+					<div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+						{{ message }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<!-- Only show global feed on certain pages, not on create/edit forms OR my tweets page -->
+		{% if name != 'login' and name != 'register' and name != 'logout' and name != 'tweet_create' and name != 'tweet_edit' and name != 'my_tweets' and global_feed_tweets %}
+			<section class="mb-4">
+				<div class="d-flex justify-content-between align-items-center">
+					<h2 class="h5 m-0">Recent tweets</h2>
+					<small class="text-muted">Latest 10 from everyone</small>
+				</div>
+				<div class="row g-3 mt-2">
+					{% for t in global_feed_tweets %}
+						<div class="col-12 col-md-6 col-lg-4">
+							<div class="card h-100 shadow-sm border-0">
+								{% if t.photo %}
+									<img src="{{ t.photo.url }}" class="card-img-top" alt="Tweet Photo">
+								{% endif %}
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center mb-2">
+										<span class="badge bg-secondary">{{ t.user.username }}</span>
+										<small class="tweet-date">
+											{{ t.created_at|default:t.updated_at|date:"M j, Y H:i" }}
+										</small>
+									</div>
+									<p class="card-text tweet-text">{{ t.text }}</p>
+									<!-- NO EDIT/DELETE BUTTONS HERE - READ ONLY -->
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</section>
+		{% endif %}
+
+		{% block content %}{% endblock %}
+	</main>
+{% endwith %}
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
