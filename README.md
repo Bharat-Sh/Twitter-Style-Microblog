@@ -1,4 +1,4 @@
-# Chai aur Tweet 🍵🐦
+# Twitter-Style-Microblog 🍵🐦
 
 A Django-based Twitter-style microblogging platform where users can share thoughts, images, and engage with content in a clean, responsive interface.
 
@@ -12,10 +12,6 @@ A Django-based Twitter-style microblogging platform where users can share though
 - **Responsive Design**: Modern UI built with Bootstrap 5 and custom CSS
 - **Image Uploads**: Support for photo attachments using Django ImageField
 - **Security**: CSRF protection, user ownership validation, and secure forms
-
-## 🚀 Live Demo
-
-Visit the application: [Your Live URL Here]
 
 ## 🛠️ Technology Stack
 
@@ -36,8 +32,8 @@ Visit the application: [Your Live URL Here]
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/chai-aur-tweet.git
-   cd chai-aur-tweet/tweets
+   git clone  https://github.com/Bharat-Sh/Twitter-Style-Microblog
+   cd Twitter-Style-Microblog/tweets
    ```
 
 2. **Create a virtual environment (recommended)**
@@ -190,15 +186,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Bootstrap Team
 - Python Community
 - Open Source Contributors
-
-## 📞 Support
-
-If you have any questions or need help:
-- Open an issue on GitHub
-- Contact: [your-email@example.com]
-- Project Link: [https://github.com/yourusername/chai-aur-tweet](https://github.com/yourusername/chai-aur-tweet)
-
----
 
 **Made with ❤️ using Django and Bootstrap**
 
